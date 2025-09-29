@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tutoring System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        #chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            overflow-y: auto;
+        }
+        .message {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 8px;
+            max-width: 70%;
+        }
+        .user-message {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+        .ai-message {
+            background-color: #ffffff;
+            align-self: flex-start;
+            border: 1px solid #ccc;
+        }
+        #input-container {
+            display: flex;
+            padding: 10px;
+            background-color: #eee;
+        }
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        #send-btn {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #send-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AI Tutoring System</h1>
+</header>
+
+<div id="chat-container"></div>
+
+<div id="input-container">
+    <input type="text" id="user-input" placeholder="Type your question here...">
+    <button id="send-btn">Send</button>
+</div>
+
+<script>
+    const chatContainer = document.getElementById('chat-container');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    function appendMessage(content, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', type);
+        messageDiv.textContent = content;
+        chatContainer.appendChild(messageDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function aiReply(userText) {
+        // Placeholder AI responses (replace with actual API later)
+        const responses = {
+            "hello": "Hello! How can I help you with your studies today?",
+            "what is ai": "AI stands for Artificial Intelligence. It's the simulation of human intelligence in machines.",
+            "default": "Interesting question! Let's explore it together."
+        };
+        return responses[userText.toLowerCase()] || responses["default"];
+    }
+
+    sendBtn.addEventListener('click', () => {
+        const text = userInput.value.trim();
+        if (text === "") return;
+
+        appendMessage(text, "user-message");
+        userInput.value = "";
+
+        setTimeout(() => {
+            const reply = aiReply(text);
+            appendMessage(reply, "ai-message");
+        }, 500);
+    });
+
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") {
+            sendBtn.click();
+        }
+    });
+</script>
+
+</body>
+</html>
